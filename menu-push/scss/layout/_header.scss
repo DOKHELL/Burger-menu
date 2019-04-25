@@ -1,0 +1,409 @@
+.header{
+	background: $rich-electric-blue;
+	color: $white;
+	padding: 20px 0;
+	z-index: 10;
+	position: relative;
+	width: 100%;
+	a{
+		color: $white;
+	}
+	.row{
+		position: static;
+	}
+	@include media("<desktop"){
+		text-align: center;
+		height: 48px;
+		padding: 14px 0;
+	}
+}
+
+.logo{
+	float: left;
+	font-size: 30px;
+	line-height: 1.3;
+	font-weight: bold;
+	text-transform: uppercase;
+	text-decoration: none;
+	z-index: 10;
+	position: relative;
+	margin: -3px 0;
+	@include media("<desktop"){
+		float: none;
+		display: inline-block;
+		vertical-align: top;
+		margin: -11px 0 0;
+	}
+}
+
+.menu-opener{
+	@include size(20px);
+	position: absolute;
+	left: 14px;
+	top: 13px;
+	z-index: 12;
+	display:none;
+	@include media('<desktop') {
+		display:block;
+	}
+	&:before{
+		content:'';
+		position:absolute;
+		left:-14px;
+		top:-14px;
+		right: -14px;
+		bottom: -14px;
+	}
+	.lt, .lc, .lb{
+		position: absolute;
+		height: 2px;
+		left: 0;
+		right: 0;
+		pointer-evens:none;
+		&:after{
+			content: '';
+			position:absolute;
+			left:0;
+			top:0;
+			right: 0;
+			bottom: 0;
+			background:$white;
+			transition:transform 0.25s ease;
+			transform:rotate(0);
+		}
+	}
+	.lc{
+		top:50%;
+		transform: translateY(-50%);
+		opacity: 1;
+		transition:opacity 0.25s ease;
+		background: $white;
+		.open-nav &{
+			opacity:0;
+			transition:opacity 0.25s ease;
+		}
+	}
+	.lt, .lb{
+		position:absolute;
+		top:4px;
+		left:0;
+		right: 0;
+		height:2px;
+		transition:transform 0.25s ease;
+		pointer-evens:none;
+		margin: 0;
+		transform:translate3d(0,0,0);
+	}
+	.lt{
+		.open-nav &{
+			transition:transform 0.25s ease;
+			transform:translate3d(0,5px,0);
+			visibility: visible;
+			&:after{
+				transition:transform 0.25s ease;
+				transform:rotate(45deg);
+			}
+		}
+	}
+	.lb{
+		top:auto;
+		bottom:4px;
+		.open-nav &{
+			transition:transform 0.25s ease;
+			transform:translate3d(0,-5px,0);
+			&:after{
+				transition:transform 0.25s ease;
+				transform:rotate(-45deg);
+			}
+		}
+	}
+}
+
+.menu-aside{
+	display: none;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 100%;
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+	width: 340px;
+	border-right: 1px solid rgba(0,0,0,0.1);
+	background: $rich-electric-blue;
+	z-index: 12;
+	pointer-events: auto;
+	min-width: 256px;
+	.resize-active &{
+		transition:none !important;
+	}
+	.animating-burger-menu &{
+		pointer-events: none;
+	}
+	@include media('<desktop'){
+		display: block;
+	}
+	 @include media("<tablet"){
+		width: 256px;
+	}
+}
+
+.nav{
+	float: right;
+	font-size: 15px;
+	line-height: 1.5em;
+	margin: -20px 0;
+	ul{
+		@extend %listreset;
+		float: left;
+		li{
+			float: left;
+			position: relative;
+			margin: 0 0 0 1px;
+			&:first-child{
+				margin-left: 0;
+			}
+			a{
+				display: block;
+				text-decoration: none;
+				transition: background $animation-speed ease;
+				padding: 25px 20px;
+				&:hover,
+				&:focus{
+					transition: background $animation-speed ease;
+				}
+			}
+			ul{
+				position: absolute;
+				top: 100%;
+				left: 0;
+				min-width: 240px;
+				background: rgba(22,140,227,0.96);
+				display: none;
+				li{
+					float: none;
+					margin: 0;
+					a{
+						padding: 10px 40px 10px 15px;
+						&.has-drop-down-a{
+							position: relative;
+							&:after{
+								content:'';
+								position:absolute;
+								right: 10px;
+								top:50%;
+								width:20px;
+								height:20px;
+								background:url(../images/chevron_right.svg) no-repeat;
+								background-size: 100% auto;
+								margin: -10px 0 0;
+								z-index: 3;
+							}
+						}
+					}
+				}
+				ul{
+					left: 100%;
+					top: 0;
+					margin-left: 1px;
+					&:before{
+						content:'';
+						position:absolute;
+						left:-1px;
+						top:0;
+						bottom: 0;
+						width: 2px;
+						z-index: -1;
+					}
+				}
+			}
+			&.left{
+				ul{
+					left: auto;
+					right: 0;
+					text-align: right;
+					li{
+						a{
+							padding-left: 40px;
+							padding-right: 15px;
+							&.has-drop-down-a{
+								&:after{
+									right: auto;
+									left: 10px;
+									background:url(../images/chevron_left.svg) no-repeat;
+									background-size: 100% auto;
+								}
+							}
+						}
+					}
+					ul{
+						left: auto;
+						right: 100%;
+						margin: 0 1px 0 0;
+						&:before{
+							left: auto;
+							right: -1px;
+						}
+					}
+				}
+			}
+			&.hover{
+				a{
+					background: rgba(0,0,0,0.2);
+					transition: background $animation-speed ease;
+				}
+				ul{
+					display: block;
+					ul{
+						display: none;
+					}
+					li{
+						a{
+							background: none;
+						}
+						&.hover{
+							a{
+								background: rgba(0,0,0,0.2);
+								transition: background $animation-speed ease;
+							}
+							ul{
+								display: block;
+								li{
+									a{
+										background: none;
+									}
+									&.hover{
+										a{
+											background: rgba(0,0,0,0.2);
+											transition: background $animation-speed ease;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	@include media("<desktop"){
+		display: none;
+	}
+}
+
+.menu{
+	font-size: 15px;
+	line-height: 1.5em;
+	ul{
+		@extend %listreset;
+		li{
+			border: solid;
+			border-width: 0 0 1px;
+			border-color: $white;
+			a{
+				display: block;
+				padding: 13px 20px;
+				color: $white;
+				text-decoration: none;
+				transition: background $animation-speed ease;
+				&:hover,
+				&:focus{
+					text-decoration: none;
+					background: rgba(0,0,0,0.2);
+					transition: background $animation-speed ease;
+				}
+				&.has-drop-down-a{
+					position: relative;
+					&:after{
+						content:'';
+						position:absolute;
+						left:9px;
+						top:50%;
+						margin: -3px 0 0;
+						@include triangle(7px 6px, $white, right);
+						transform: rotate(0);
+						transition: transform $animation-speed ease;
+					}
+				}
+			}
+			&.active{
+				a{
+					&.has-drop-down-a{
+						&:after{
+							transform: rotate(90deg);
+							transition: transform $animation-speed ease;
+						}
+					}
+				}
+				ul{
+					li{
+						a{
+							&.has-drop-down-a{
+								&:after{
+									transform: rotate(0);
+								}
+							}
+						}
+						&.active{
+							a{
+								&.has-drop-down-a{
+									&:after{
+										transform: rotate(90deg);
+									}
+								}
+							}
+						}
+					}
+					ul{
+						li{
+							a{
+								&.has-drop-down-a{
+									&:after{
+										transform: rotate(0);
+									}
+								}
+							}
+							&.active{
+								a{
+									&.has-drop-down-a{
+										&:after{
+											transform: rotate(90deg);
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		ul{
+			background: darken($rich-electric-blue, 5%);
+			li{
+				border-width: 1px 0 0;
+				a{
+					padding-left: 40px;
+					&.has-drop-down-a{
+						position: relative;
+						&:after{
+							left:29px;
+						}
+					}
+				}
+			}
+			ul{
+				background: darken($rich-electric-blue, 10%);
+				li{
+					a{
+						padding-left: 60px;
+						&.has-drop-down-a{
+							position: relative;
+							&:after{
+								left:49px;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

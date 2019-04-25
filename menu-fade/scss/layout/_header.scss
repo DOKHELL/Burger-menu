@@ -1,0 +1,209 @@
+.header{
+	background: $rich-electric-blue;
+	color: $white;
+	padding: 25px 0;
+	a{
+		color: $white;
+	}
+	.row{
+		position: static;
+	}
+	@include media("<desktop"){
+		height: 48px;
+		padding: 14px 0;
+		text-align: center;
+	}
+}
+
+.logo{
+	float: left;
+	font-size: 30px;
+	line-height: 1.3;
+	font-weight: bold;
+	text-transform: uppercase;
+	text-decoration: none;
+	z-index: 10;
+	position: relative;
+	@include media("<desktop"){
+		float: none;
+		display: inline-block;
+		vertical-align: top;
+		margin: -11px 0;
+	}
+}
+
+.nav{
+	float: right;
+	font-size: 15px;
+	line-height: 1.5em;
+	padding: 5px 0 0;
+	pointer-events: auto;
+	.animating-burger-menu &{
+		pointer-events: none;
+	}
+	ul{
+		@extend %listreset;
+		float: left;
+		li{
+			float: left;
+			position: relative;
+			margin: 0 0 0 25px;
+			&:first-child{
+				margin-left: 0;
+			}
+			a{
+				display: block;
+				text-decoration: none;
+				transition: opacity $animation-speed ease;
+				opacity: 1;
+				&:hover,
+				&:focus{
+					opacity: 0.65;
+					transition: opacity $animation-speed ease;
+				}
+			}
+			
+		}
+	}
+	@include media("<desktop"){
+		position:fixed;
+		top: 0;
+		right: 0;
+		height: 100%;
+		width: 100%;
+		z-index: 10;
+		background: $rich-electric-blue;
+		text-align: center;
+		padding: 50px 0;
+		white-space:nowrap;
+		visibility: hidden;
+		opacity: 0;
+		will-change: opacity;
+		pointer-events:none;
+		transition: visibility $animation-speed ease, opacity $animation-speed ease;
+		.resize-active &{
+			transition:none !important;
+		}
+		.open-nav &{
+			opacity: 1;
+			pointer-events:auto;
+			visibility: visible;
+			transition: visibility $animation-speed ease, opacity $animation-speed ease;
+		}
+		&:after{
+			content:'';
+			display:inline-block;
+			height:100%;
+			width:1px;
+			overflow:hidden;
+			margin:0 0 0 -5px;
+			vertical-align:middle;
+		}
+		ul{
+			vertical-align:middle;
+			display:inline-block;
+			white-space:normal;
+			width: 100%;
+			float: none;
+			font-size: 34px;
+			line-height: 1.5em;
+			font-weight: bold;
+			@include media('<tablet'){
+				font-size: 30px;
+			}
+			li{
+				float: none;
+				margin: 30px 0 0;
+				&:first-child{
+					margin-top: 0;
+				}
+				@include media('<tablet'){
+					margin: 20px 0 0;
+				}
+			}
+		}
+	}
+}
+
+.nav-opener{
+	@include size(20px);
+	position: absolute;
+	right: 14px;
+	top: 13px;
+	z-index: 12;
+	display:none;
+	@include media('<desktop') {
+		display:block;
+	}
+	&:before{
+		content:'';
+		position:absolute;
+		left:-14px;
+		top:-14px;
+		right: -14px;
+		bottom: -14px;
+	}
+	.lt, .lc, .lb{
+		position: absolute;
+		height: 2px;
+		left: 0;
+		right: 0;
+		pointer-evens:none;
+		&:after{
+			content: '';
+			position:absolute;
+			left:0;
+			top:0;
+			right: 0;
+			bottom: 0;
+			background:$white;
+			transition:transform 0.25s ease;
+			transform:rotate(0);
+		}
+	}
+	.lc{
+		top:50%;
+		transform: translateY(-50%);
+		opacity: 1;
+		transition:opacity 0.25s ease;
+		background: $white;
+		.open-nav &{
+			opacity:0;
+			transition:opacity 0.25s ease;
+		}
+	}
+	.lt, .lb{
+		position:absolute;
+		top:4px;
+		left:0;
+		right: 0;
+		height:2px;
+		transition:transform 0.25s ease;
+		pointer-evens:none;
+		margin: 0;
+		transform:translateY(0);
+	}
+	.lt{
+		.open-nav &{
+			transition:transform 0.25s ease;
+			transform:translateY(5px);
+			visibility: visible;
+			&:after{
+				transition:transform 0.25s ease;
+				transform:rotate(45deg);
+			}
+		}
+	}
+	.lb{
+		top:auto;
+		bottom:4px;
+		.open-nav &{
+			transition:transform 0.25s ease;
+			transform:translateY(-5px);
+			&:after{
+				transition:transform 0.25s ease;
+				transform:rotate(-45deg);
+			}
+		}
+	}
+}
